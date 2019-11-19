@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.6)
 project(PARALLELRAYTRACER)
 
+include_directories(src)
+
 add_library(ParallelRayTracer
 	src/ParallelRayTracer/macros.h
 	src/ParallelRayTracer/Core.h

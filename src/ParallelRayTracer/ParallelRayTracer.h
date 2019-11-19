@@ -1,0 +1,7 @@
+#ifndef PARALLELRAYTRACER_PARALLELRAYTRACER_H
+#define PARALLELRAYTRACER_PARALLELRAYTRACER_H
+
+#include "Core.h"
+#include "macros.h"
+
+#endif
