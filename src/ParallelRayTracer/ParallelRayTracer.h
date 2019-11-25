@@ -7,5 +7,6 @@
 #include "Ray.h"
 #include "Object.h"
 #include "RayTracer.h"
+#include "Sphere.h"
 
 #endif

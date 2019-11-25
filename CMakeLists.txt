@@ -12,6 +12,7 @@ add_library(ParallelRayTracer
 	src/ParallelRayTracer/Object.h
 	src/ParallelRayTracer/Camera.h
 	src/ParallelRayTracer/RayTracer.h
+	src/ParallelRayTracer/Sphere.h
 
 	src/ParallelRayTracer/Core.cpp
 	src/ParallelRayTracer/Keyboard.cpp
@@ -19,6 +20,7 @@ add_library(ParallelRayTracer
 	src/ParallelRayTracer/Object.cpp
 	src/ParallelRayTracer/Camera.cpp
 	src/ParallelRayTracer/RayTracer.cpp
+	src/ParallelRayTracer/Sphere.cpp
 )
 target_link_libraries(ParallelRayTracer SDL2 opengl32 glew32)
 
