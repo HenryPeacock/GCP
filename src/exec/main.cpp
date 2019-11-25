@@ -28,5 +28,18 @@ int main()
 	// Draw the single pixel
 	MCG::DrawPixel(pixelPosition, pixelColour);
 
+	Camera camera;
+	RayTracer tracer;
+	for (int i = 0; i < windowSize.x; i++)
+	{
+		for (int j = 0; i < windowSize.y; i++)
+		{
+			glm::ivec2 rayPosition = glm::ivec2(i, j);
+			Ray ray = camera.CreateRay(rayPosition);
+			glm::vec3 rayColour = tracer.TraceRay(ray);
+			MCG::DrawPixel(rayPosition, rayColour);
+		}
+	}
+
 	return MCG::ShowAndHold();
 }
