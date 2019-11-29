@@ -9,4 +9,4 @@ public:
 	glm::vec3 origin, direction;
 };
 
-#endif // !RAY_H
+#endif

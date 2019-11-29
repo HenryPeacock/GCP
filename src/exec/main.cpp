@@ -35,7 +35,7 @@ int main()
 		for (int j = 0; i < windowSize.y; i++)
 		{
 			glm::ivec2 rayPosition = glm::ivec2(i, j);
-			Ray ray = camera.CreateRay(rayPosition);
+			shared<Ray> ray = camera.CreateRay(rayPosition);
 			glm::vec3 rayColour = tracer.TraceRay(ray);
 			MCG::DrawPixel(rayPosition, rayColour);
 		}

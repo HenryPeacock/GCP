@@ -7,6 +7,6 @@ class Object
 {
 private:
 	glm::vec3 m_position, m_rotation, m_scale;
-}
+};
 
 #endif
