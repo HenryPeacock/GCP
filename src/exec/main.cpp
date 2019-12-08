@@ -6,6 +6,8 @@
 
 int main()
 {
+	// Ctrl + F "ToDo"
+
 	srand(time(NULL));
 	float windowX = 640.0f;
 	float windowY = 480.0f;

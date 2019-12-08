@@ -19,30 +19,30 @@ glm::vec3 RayTracer::ClosestPoint(shared<Ray> _ray, glm::vec3 _queryPoint)
 	return X;
 }
 
-float RayTracer::IntersectingSphere(shared<Ray> _ray, glm::vec3 _sphereCentre, float _radius)
+shared<RayDetails> RayTracer::IntersectingSphere(shared<Ray> _ray, glm::vec3 _sphereCentre, float _radius)
 {
+	// Define the return class
+	shared<RayDetails> returnValue;
+
 	// Check if ray origin is inside of the sphere, it is is then error
-	//	- http://www.miguelcasillas.com/?p=38
-	glm::vec3 distanceVec = _sphereCentre - _ray->origin;
-	float distance = glm::sqrt(glm::dot(distanceVec, distanceVec));
+	float distance = glm::distance(_ray->origin, _sphereCentre);
 	if (distance < _radius)
 	{
-		return 0.0f;
+		returnValue->m_isIntersecting = false;
+		return returnValue;
 	}
 
 	// Find the closest point on the ray to the centre of the sphere
 	glm::vec3 closest = ClosestPoint(_ray, _sphereCentre);
 
+	// ToDo
 	// Check if the closest point is in front or behind of the ray's origin/ direction
 	//	- Reject if intersection is behind ray's origin and direction points away from it
 	//	- This prevents us from drawing objects that are behind the camera 
-	// 
-
-	//if (closest < _ray->origin)
 
 
-	// Work out distance from the closest point on the line to the sphere's cente
-
+	// Work out distance from the closest point on the line to the sphere's centre
+	distance = glm::distance(closest, _sphereCentre);
 
 
 	// Perform the 3 checks
@@ -51,9 +51,32 @@ float RayTracer::IntersectingSphere(shared<Ray> _ray, glm::vec3 _sphereCentre, f
 	//		a + (((P-a) dot n) - x)n
 	//			x = sqrt(r² - d²)
 	//		d = ||P - a - ((P - a) dot n)n||
-
-
-	return 0.0f;
+	if (distance > _radius)
+	{
+		returnValue->m_isIntersecting = false;
+		return returnValue;
+	}
+	else
+	{
+		// We have collided, hooray!
+		returnValue->m_isIntersecting = true;
+		// a = vector from cam pos to ray pos
+		glm::vec3 a = _ray->origin - m_camPos;
+		// n = normalized direction vector of ray
+		glm::vec3 n = glm::normalize(_ray->direction);
+		// P = Query Point
+		glm::vec3 P = _sphereCentre - m_camPos;
+		// d = ||P - a - ((P - a) dot n)n||
+		glm::vec3 dirVec = P - a - (glm::dot((P - a), n)*n);
+		float d = abs(glm::length(dirVec));
+		// x = sqrt(r² - d²)
+		float x = glm::sqrt((_radius*_radius) - (d*d));
+		
+		// hit = closest point - n*x for reasons?
+		glm::vec3 hit = closest - n * x;
+		returnValue->m_intersectDistance = glm::distance(_ray->origin, hit);
+		return returnValue;
+	}
 }
 
 glm::vec3 RayTracer::GetSphereNormal(glm::vec3 _centrePoint, glm::vec3 _samplePoint)

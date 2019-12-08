@@ -8,6 +8,7 @@ class Camera
 {
 public:
 	shared<Ray> CreateRay(glm::ivec2 _pixelPair);
+private:
 };
 
 

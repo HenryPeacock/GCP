@@ -13,11 +13,18 @@ public:
 	// Get the closest point on a ray
 	glm::vec3 ClosestPoint(shared<Ray> _ray, glm::vec3 _queryPoint);
 	// Ray-sphere intersection
-	float IntersectingSphere(shared<Ray> _ray, glm::vec3 _sphereCentre, float _radius);
+	shared<RayDetails> IntersectingSphere(shared<Ray> _ray, glm::vec3 _sphereCentre, float _radius);
 	// Obtain normal of sphere
 	glm::vec3 GetSphereNormal(glm::vec3 _centrePoint, glm::vec3 _samplePoint);
 private:
 	glm::vec3 m_camPos = glm::vec3(0.0f, 0.0f, 0.0f);
+};
+
+class RayDetails
+{
+public:
+	bool m_isIntersecting;
+	float m_intersectDistance;
 };
 
 #endif
