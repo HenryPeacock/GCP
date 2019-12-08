@@ -30,7 +30,7 @@ int main()
 	// Draw the single pixel
 	MCG::DrawPixel(pixelPosition, pixelColour);
 
-	Camera camera;
+	Camera camera(windowSize);
 	RayTracer tracer;
 	for (int i = 0; i < windowSize.x; i++)
 	{

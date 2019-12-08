@@ -8,9 +8,9 @@ glm::vec3 RayTracer::TraceRay(shared<Ray> _ray)
 glm::vec3 RayTracer::ClosestPoint(shared<Ray> _ray, glm::vec3 _queryPoint)
 {
 	// a = vector from cam pos to ray pos
-	glm::vec3 a = _ray->origin - m_camPos;
+	glm::vec3 a = _ray->GetOrigin() - m_camPos;
 	// n = normalized direction vector of ray
-	glm::vec3 n = glm::normalize(_ray->direction);
+	glm::vec3 n = glm::normalize(_ray->GetDirection());
 	// P = Query Point
 	glm::vec3 P = _queryPoint - m_camPos;
 	// X = a + ((P - a) dot n)n
@@ -22,13 +22,13 @@ glm::vec3 RayTracer::ClosestPoint(shared<Ray> _ray, glm::vec3 _queryPoint)
 shared<RayDetails> RayTracer::IntersectingSphere(shared<Ray> _ray, glm::vec3 _sphereCentre, float _radius)
 {
 	// Define the return class
-	shared<RayDetails> returnValue;
+	shared<RayDetails> returnValue = makesh<RayDetails>();
 
 	// Check if ray origin is inside of the sphere, it is is then error
-	float distance = glm::distance(_ray->origin, _sphereCentre);
+	float distance = glm::distance(_ray->GetOrigin(), _sphereCentre);
 	if (distance < _radius)
 	{
-		returnValue->m_isIntersecting = false;
+		returnValue->SetIsIntersecting(false);
 		return returnValue;
 	}
 
@@ -53,17 +53,17 @@ shared<RayDetails> RayTracer::IntersectingSphere(shared<Ray> _ray, glm::vec3 _sp
 	//		d = ||P - a - ((P - a) dot n)n||
 	if (distance > _radius)
 	{
-		returnValue->m_isIntersecting = false;
+		returnValue->SetIsIntersecting(false);
 		return returnValue;
 	}
 	else
 	{
 		// We have collided, hooray!
-		returnValue->m_isIntersecting = true;
+		returnValue->SetIsIntersecting(true);
 		// a = vector from cam pos to ray pos
-		glm::vec3 a = _ray->origin - m_camPos;
+		glm::vec3 a = _ray->GetOrigin() - m_camPos;
 		// n = normalized direction vector of ray
-		glm::vec3 n = glm::normalize(_ray->direction);
+		glm::vec3 n = glm::normalize(_ray->GetDirection());
 		// P = Query Point
 		glm::vec3 P = _sphereCentre - m_camPos;
 		// d = ||P - a - ((P - a) dot n)n||
@@ -74,7 +74,7 @@ shared<RayDetails> RayTracer::IntersectingSphere(shared<Ray> _ray, glm::vec3 _sp
 		
 		// hit = closest point - n*x for reasons?
 		glm::vec3 hit = closest - n * x;
-		returnValue->m_intersectDistance = glm::distance(_ray->origin, hit);
+		returnValue->SetIntersectDistance(glm::distance(_ray->GetOrigin(), hit));
 		return returnValue;
 	}
 }

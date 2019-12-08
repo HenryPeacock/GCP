@@ -5,6 +5,21 @@
 #include "Ray.h"
 #include "macros.h"
 
+class RayDetails
+{
+public:
+	// Getters and Setters
+	bool GetIsIntersecting() { return m_isIntersecting; };
+	void SetIsIntersecting(bool _isIntersecting) { m_isIntersecting = _isIntersecting; };
+	// 
+	float GetIntersectDistance() { return m_intersectDistance; };
+	void SetIntersectDistance(float _intersectDistance) { m_intersectDistance = _intersectDistance; };
+
+private:
+	bool m_isIntersecting;
+	float m_intersectDistance;
+};
+
 class RayTracer
 {
 public:
@@ -18,13 +33,6 @@ public:
 	glm::vec3 GetSphereNormal(glm::vec3 _centrePoint, glm::vec3 _samplePoint);
 private:
 	glm::vec3 m_camPos = glm::vec3(0.0f, 0.0f, 0.0f);
-};
-
-class RayDetails
-{
-public:
-	bool m_isIntersecting;
-	float m_intersectDistance;
 };
 
 #endif

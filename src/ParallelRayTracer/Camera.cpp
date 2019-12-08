@@ -1,7 +1,30 @@
 #include "Camera.h"
 
+Camera::Camera(glm::ivec2 _windowDimensions)
+{
+	m_windowDimensions = _windowDimensions;
+	// Projection matrix: // Source: http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/#the-projection-matrix
+	// Generates a really hard-to-read matrix, but a normal, standard 4x4 matrix nonetheless
+	glm::mat4 m_projectionMatrix = glm::perspective(
+		glm::radians(60.0f), // The vertical Field of View, in radians: the amount of "zoom". Think "camera lens". Usually between 90° (extra wide) and 30° (quite zoomed in)
+		4.0f / 3.0f,       // Aspect Ratio. Depends on the size of your window. Notice that 4/3 == 800/600 == 1280/960, sounds familiar ?
+		0.1f,              // Near clipping plane. Keep as big as possible, or you'll get precision issues.
+		100.0f             // Far clipping plane. Keep as little as possible.
+	);
+	m_inverseProjectionMatrix = glm::inverse(m_projectionMatrix);
+}
+
 shared<Ray> Camera::CreateRay(glm::ivec2 _pixelPair)
 {
-	shared<Ray> temp;
-	return temp;
+	// Define the return class
+	shared<Ray> rtn = makesh<Ray>();
+
+	// Viewing volume is a cube from -1 to 1 in each dimension
+	// NDC is left-handed
+	rtn->SetOrigin(glm::vec3(_pixelPair.x/m_windowDimensions.x, _pixelPair.y/m_windowDimensions.y, -1));
+	rtn->SetDirection(glm::vec3(0.0f, 0.0f, 1.0f));
+	// Multiply coords by inverse projeciton matrix
+	rtn->multiplyByProjection(m_inverseProjectionMatrix);
+	
+	return rtn;
 }

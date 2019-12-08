@@ -2,11 +2,23 @@
 #define RAY_H
 
 #include "Core.h"
+#include "macros.h"
 
 class Ray
 {
 public:
-	glm::vec3 origin, direction;
+	// Getters and Setters
+	glm::vec3 GetOrigin() { return m_origin; };
+	void SetOrigin(glm::vec3 _origin) { m_origin = _origin; };
+	// 
+	glm::vec3 GetDirection() { return m_direction; };
+	void SetDirection(glm::vec3 _direction) { m_direction = _direction; };
+
+	// Function to convert to eye space
+	void multiplyByProjection(glm::mat4 _inverseProjectionMatrix);
+private:
+	glm::vec3 m_origin;
+	glm::vec3 m_direction;
 };
 
 #endif
