@@ -3,6 +3,7 @@
 Camera::Camera(glm::ivec2 _windowDimensions)
 {
 	m_windowDimensions = _windowDimensions;
+	
 	// Projection matrix: // Source: http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/#the-projection-matrix
 	// Generates a really hard-to-read matrix, but a normal, standard 4x4 matrix nonetheless
 	glm::mat4 m_projectionMatrix = glm::perspective(
@@ -12,6 +13,11 @@ Camera::Camera(glm::ivec2 _windowDimensions)
 		100.0f             // Far clipping plane. Keep as little as possible.
 	);
 	m_inverseProjectionMatrix = glm::inverse(m_projectionMatrix);
+
+	// View Matrix
+	// ToDo: Set that to forward vector and other to up vector
+	m_viewMatrix = glm::lookAt(m_position, /*THIS*/glm::vec3(0.0f,0.0f,glm::radians(90.0f)), /*ANDTHIS*/glm::vec3(0.0f, glm::radians(90.0f),0.0f));
+	m_inverseViewMatrix = glm::inverse(m_viewMatrix);
 }
 
 shared<Ray> Camera::CreateRay(glm::ivec2 _pixelPair)
@@ -23,8 +29,9 @@ shared<Ray> Camera::CreateRay(glm::ivec2 _pixelPair)
 	// NDC is left-handed
 	rtn->SetOrigin(glm::vec3(_pixelPair.x/m_windowDimensions.x, _pixelPair.y/m_windowDimensions.y, -1));
 	rtn->SetDirection(glm::vec3(0.0f, 0.0f, 1.0f));
-	// Multiply coords by inverse projeciton matrix
-	rtn->multiplyByProjection(m_inverseProjectionMatrix);
-	
+	// Multiply coords by inverse projection matrix and divide by w
+	rtn->multiplyByMatrix(m_inverseProjectionMatrix, true);
+	// Multiple coords by inverse view matrix
+	rtn->multiplyByMatrix(m_inverseViewMatrix, false);
 	return rtn;
 }

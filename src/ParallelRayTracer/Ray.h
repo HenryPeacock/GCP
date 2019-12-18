@@ -15,7 +15,7 @@ public:
 	void SetDirection(glm::vec3 _direction) { m_direction = _direction; };
 
 	// Function to convert to eye space
-	void multiplyByProjection(glm::mat4 _inverseProjectionMatrix);
+	void multiplyByMatrix(glm::mat4 _inverseMatrix, bool _isProjection);
 private:
 	glm::vec3 m_origin;
 	glm::vec3 m_direction;

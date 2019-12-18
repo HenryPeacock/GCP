@@ -2,6 +2,17 @@
 
 glm::vec3 RayTracer::TraceRay(shared<Ray> _ray)
 {
+	// Find first object hit by ray
+	//	- Check all objects in the scene
+	//	- Call Intersecting sphere 
+	//	- If hit, record distance
+	//	- Short dist is the one we want
+
+
+
+
+
+
 	return glm::vec3();
 }
 

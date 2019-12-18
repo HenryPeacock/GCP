@@ -33,6 +33,7 @@ public:
 	glm::vec3 GetSphereNormal(glm::vec3 _centrePoint, glm::vec3 _samplePoint);
 private:
 	glm::vec3 m_camPos = glm::vec3(0.0f, 0.0f, 0.0f);
+	float m_highestDistance;
 };
 
 #endif
