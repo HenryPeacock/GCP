@@ -1,14 +1,20 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
-#include "Core.h"
 #include "Object.h"
 #include "Ray.h"
 
-class Sphere : Object 
+class Sphere : public Object 
 {
 public:
 	glm::vec3 ShadePixel(Ray ray, glm::vec3 intersect);
+
+	// Getters and Setters
+	float GetRadius() { return m_radius; };
+	void SetRadius(float _radius) { m_radius = _radius; };
+
+private:
+	float m_radius;
 };
 
 #endif

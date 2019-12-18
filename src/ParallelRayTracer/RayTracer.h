@@ -4,6 +4,7 @@
 #include "Core.h"
 #include "Ray.h"
 #include "macros.h"
+#include "Sphere.h"
 
 class RayDetails
 {
@@ -28,7 +29,7 @@ public:
 	// Get the closest point on a ray
 	glm::vec3 ClosestPoint(shared<Ray> _ray, glm::vec3 _queryPoint);
 	// Ray-sphere intersection
-	shared<RayDetails> IntersectingSphere(shared<Ray> _ray, glm::vec3 _sphereCentre, float _radius);
+	shared<RayDetails> IntersectingSphere(shared<Ray> _ray, shared<Sphere> _sphere);
 	// Obtain normal of sphere
 	glm::vec3 GetSphereNormal(glm::vec3 _centrePoint, glm::vec3 _samplePoint);
 private:

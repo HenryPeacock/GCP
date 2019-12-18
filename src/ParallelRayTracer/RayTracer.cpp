@@ -6,7 +6,7 @@ glm::vec3 RayTracer::TraceRay(shared<Ray> _ray)
 	//	- Check all objects in the scene
 	//	- Call Intersecting sphere 
 	//	- If hit, record distance
-	//	- Short dist is the one we want
+	//	- Shortest dist is the one we want
 
 
 
@@ -30,21 +30,21 @@ glm::vec3 RayTracer::ClosestPoint(shared<Ray> _ray, glm::vec3 _queryPoint)
 	return X;
 }
 
-shared<RayDetails> RayTracer::IntersectingSphere(shared<Ray> _ray, glm::vec3 _sphereCentre, float _radius)
+shared<RayDetails> RayTracer::IntersectingSphere(shared<Ray> _ray, shared<Sphere> _sphere)
 {
 	// Define the return class
 	shared<RayDetails> returnValue = makesh<RayDetails>();
 
 	// Check if ray origin is inside of the sphere, it is is then error
-	float distance = glm::distance(_ray->GetOrigin(), _sphereCentre);
-	if (distance < _radius)
+	float distance = glm::distance(_ray->GetOrigin(), _sphere->GetPosition());
+	if (distance < _sphere->GetRadius())
 	{
 		returnValue->SetIsIntersecting(false);
 		return returnValue;
 	}
 
 	// Find the closest point on the ray to the centre of the sphere
-	glm::vec3 closest = ClosestPoint(_ray, _sphereCentre);
+	glm::vec3 closest = ClosestPoint(_ray, _sphere->GetPosition());
 
 	// ToDo
 	// Check if the closest point is in front or behind of the ray's origin/ direction
@@ -53,7 +53,7 @@ shared<RayDetails> RayTracer::IntersectingSphere(shared<Ray> _ray, glm::vec3 _sp
 
 
 	// Work out distance from the closest point on the line to the sphere's centre
-	distance = glm::distance(closest, _sphereCentre);
+	distance = glm::distance(closest, _sphere->GetPosition());
 
 
 	// Perform the 3 checks
@@ -62,7 +62,7 @@ shared<RayDetails> RayTracer::IntersectingSphere(shared<Ray> _ray, glm::vec3 _sp
 	//		a + (((P-a) dot n) - x)n
 	//			x = sqrt(r² - d²)
 	//		d = ||P - a - ((P - a) dot n)n||
-	if (distance > _radius)
+	if (distance > _sphere->GetRadius())
 	{
 		returnValue->SetIsIntersecting(false);
 		return returnValue;
@@ -76,12 +76,12 @@ shared<RayDetails> RayTracer::IntersectingSphere(shared<Ray> _ray, glm::vec3 _sp
 		// n = normalized direction vector of ray
 		glm::vec3 n = glm::normalize(_ray->GetDirection());
 		// P = Query Point
-		glm::vec3 P = _sphereCentre - m_camPos;
+		glm::vec3 P = _sphere->GetPosition() - m_camPos;
 		// d = ||P - a - ((P - a) dot n)n||
 		glm::vec3 dirVec = P - a - (glm::dot((P - a), n)*n);
 		float d = abs(glm::length(dirVec));
 		// x = sqrt(r² - d²)
-		float x = glm::sqrt((_radius*_radius) - (d*d));
+		float x = glm::sqrt((_sphere->GetRadius()*_sphere->GetRadius()) - (d*d));
 		
 		// hit = closest point - n*x for reasons?
 		glm::vec3 hit = closest - n * x;
