@@ -21,7 +21,7 @@ int main()
 		return -1;
 	}
 
-	// Sets all pxels to a colour
+	// Sets all pixels to a colour
 	MCG::SetBackground(glm::ivec3(0.0f, 0.0f, 0.0f));
 
 	// Determine where the pixel should be
@@ -30,8 +30,15 @@ int main()
 	// Draw the single pixel
 	MCG::DrawPixel(pixelPosition, pixelColour);
 
+	// Trying to draw a sphere :O
+
+	// Make the variables
 	Camera camera(windowSize);
 	RayTracer tracer;
+	Sphere sphere;
+	sphere.SetPosition(glm::vec3((windowSize / 2), 0.0f));
+	sphere.SetRadius(5.0f);
+	// Pray?
 	for (int i = 0; i < windowSize.x; i++)
 	{
 		for (int j = 0; i < windowSize.y; i++)
