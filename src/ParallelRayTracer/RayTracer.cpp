@@ -7,6 +7,14 @@ glm::vec3 RayTracer::TraceRay(shared<Ray> _ray)
 	//	- Call Intersecting sphere 
 	//	- If hit, record distance
 	//	- Shortest dist is the one we want
+	
+	if (IntersectingSphere(_ray, m_spheres.at(0))->GetIsIntersecting())
+	{
+		return glm::vec3(255.0f, 0.0f, 0.0f);
+	}
+	return glm::vec3(0.0f, 50.0f, 50.0f);
+	// ToDo: Make this shit work later
+	/*
 	shared<RayDetails> details = makesh<RayDetails>();
 	details->SetIsIntersecting(false);
 	for (int i = 0; i < m_spheres.size(); i++)
@@ -33,6 +41,7 @@ glm::vec3 RayTracer::TraceRay(shared<Ray> _ray)
 	{
 		return glm::vec3(0.0f, 0.0f, 0.0f); // ToDo: Change this to actual background colour
 	}
+	*/
 }
 
 glm::vec3 RayTracer::ClosestPoint(shared<Ray> _ray, glm::vec3 _queryPoint)

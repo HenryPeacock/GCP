@@ -9,8 +9,8 @@ int main()
 	// Ctrl + F "ToDo"
 
 	srand(time(NULL));
-	float windowX = 640.0f;
-	float windowY = 480.0f;
+	float windowX = 800.0f;
+	float windowY = 600.0f;
 	// Storage variables
 	glm::ivec2 windowSize(windowX, windowY);
 	glm::ivec3 pixelColour = glm::ivec3(255.0f, 0.0f, 0.0f);
@@ -35,13 +35,14 @@ int main()
 	// Make the variables
 	Camera camera(windowSize);
 	RayTracer tracer;
-	Sphere sphere;
-	sphere.SetPosition(glm::vec3((windowSize / 2), 0.0f));
-	sphere.SetRadius(5.0f);
+	shared<Sphere> sphere = makesh<Sphere>();
+	sphere->SetPosition(glm::vec3(0.0f, 0.0f, 6.0f));
+	sphere->SetRadius(1.0f);
+	tracer.AddSphere(sphere);
 	// Pray?
 	for (int i = 0; i < windowSize.x; i++)
 	{
-		for (int j = 0; i < windowSize.y; i++)
+		for (int j = 0; j < windowSize.y; j++)
 		{
 			glm::ivec2 rayPosition = glm::ivec2(i, j);
 			shared<Ray> ray = camera.CreateRay(rayPosition);

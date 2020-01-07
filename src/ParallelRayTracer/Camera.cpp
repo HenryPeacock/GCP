@@ -25,6 +25,21 @@ shared<Ray> Camera::CreateRay(glm::ivec2 _pixelPair)
 	// Define the return class
 	shared<Ray> rtn = makesh<Ray>();
 
+	float x = _pixelPair.x - (m_windowDimensions.x / 2);
+	float y = _pixelPair.y - (m_windowDimensions.y / 2);
+
+	// ToDo, move to camera constructor, change to being based on FOV not set at 60
+	float cameraDistance = (m_windowDimensions.x) / (glm::tan(glm::radians(60.0f / 2.0f)));
+
+	glm::vec3 tempPoint = glm::vec3(x, y, cameraDistance);
+	glm::vec3 tempDir = tempPoint - m_position;
+
+	rtn->SetOrigin(m_position);
+	rtn->SetDirection(tempDir);
+	return rtn;
+
+	// Old stuff (More advanced than necessary)
+	/* 
 	// Viewing volume is a cube from -1 to 1 in each dimension
 	// NDC is left-handed
 	rtn->SetOrigin(glm::vec3(_pixelPair.x/m_windowDimensions.x, _pixelPair.y/m_windowDimensions.y, -1));
@@ -34,4 +49,5 @@ shared<Ray> Camera::CreateRay(glm::ivec2 _pixelPair)
 	// Multiple coords by inverse view matrix
 	rtn->multiplyByMatrix(m_inverseViewMatrix, false);
 	return rtn;
+	*/
 }
