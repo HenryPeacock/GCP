@@ -19,10 +19,14 @@ public:
 	//
 	glm::vec3 GetColour() { return m_colour; };
 	void SetColour(glm::vec3 _colour) { m_colour = _colour; };
+	//
+	glm::vec3 GetNormal() { return m_normal; };
+	void SetNormal(glm::vec3 _normal) { m_normal = _normal; };
 private:
 	bool m_isIntersecting;
 	float m_intersectDistance;
 	glm::vec3 m_colour;
+	glm::vec3 m_normal;
 };
 
 class RayTracer

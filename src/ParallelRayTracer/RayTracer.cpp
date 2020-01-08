@@ -124,11 +124,14 @@ shared<RayDetails> RayTracer::IntersectingSphere(shared<Ray> _ray, shared<Sphere
 		// hit = closest point - n*x for reasons?
 		glm::vec3 hit = closest - n * x;
 		returnValue->SetIntersectDistance(glm::distance(_ray->GetOrigin(), hit));
+		returnValue->SetNormal(GetSphereNormal(_sphere, hit));
 		return returnValue;
 	}
 }
 
 glm::vec3 RayTracer::GetSphereNormal(shared<Sphere> _sphere, glm::vec3 _samplePoint)
 {
-	return glm::vec3();
+	glm::vec3 returnValue = _sphere->GetPosition() - _samplePoint;
+	glm::normalize(returnValue);
+	return returnValue;
 }
