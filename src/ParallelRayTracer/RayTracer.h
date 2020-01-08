@@ -18,7 +18,7 @@ public:
 	void SetIntersectDistance(float _intersectDistance) { m_intersectDistance = _intersectDistance; };
 	//
 	glm::vec3 GetColour() { return m_colour; };
-	glm::vec3 SetColour(glm::vec3 _colour) { m_colour = _colour; };
+	void SetColour(glm::vec3 _colour) { m_colour = _colour; };
 private:
 	bool m_isIntersecting;
 	float m_intersectDistance;
@@ -35,7 +35,7 @@ public:
 	// Ray-sphere intersection
 	shared<RayDetails> IntersectingSphere(shared<Ray> _ray, shared<Sphere> _sphere);
 	// Obtain normal of sphere
-	glm::vec3 GetSphereNormal(glm::vec3 _centrePoint, glm::vec3 _samplePoint);
+	glm::vec3 GetSphereNormal(shared<Sphere> _sphere, glm::vec3 _samplePoint);
 	// Add an object
 	void AddSphere(shared<Sphere> _sphere) { m_spheres.push_back(_sphere); };
 private:

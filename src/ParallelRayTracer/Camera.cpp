@@ -25,6 +25,7 @@ shared<Ray> Camera::CreateRay(glm::ivec2 _pixelPair)
 	// Define the return class
 	shared<Ray> rtn = makesh<Ray>();
 
+	
 	float x = _pixelPair.x - (m_windowDimensions.x / 2);
 	float y = _pixelPair.y - (m_windowDimensions.y / 2);
 
@@ -37,9 +38,10 @@ shared<Ray> Camera::CreateRay(glm::ivec2 _pixelPair)
 	rtn->SetOrigin(m_position);
 	rtn->SetDirection(tempDir);
 	return rtn;
+	
 
-	// Old stuff (More advanced than necessary)
-	/* 
+	// Old stuff (More advanced than necessary) ToDo: Can try to reimplement
+	/*
 	// Viewing volume is a cube from -1 to 1 in each dimension
 	// NDC is left-handed
 	rtn->SetOrigin(glm::vec3(_pixelPair.x/m_windowDimensions.x, _pixelPair.y/m_windowDimensions.y, -1));

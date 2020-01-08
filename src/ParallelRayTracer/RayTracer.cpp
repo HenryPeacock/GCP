@@ -8,13 +8,6 @@ glm::vec3 RayTracer::TraceRay(shared<Ray> _ray)
 	//	- If hit, record distance
 	//	- Shortest dist is the one we want
 	
-	if (IntersectingSphere(_ray, m_spheres.at(0))->GetIsIntersecting())
-	{
-		return glm::vec3(255.0f, 0.0f, 0.0f);
-	}
-	return glm::vec3(0.0f, 50.0f, 50.0f);
-	// ToDo: Make this shit work later
-	/*
 	shared<RayDetails> details = makesh<RayDetails>();
 	details->SetIsIntersecting(false);
 	for (int i = 0; i < m_spheres.size(); i++)
@@ -22,10 +15,19 @@ glm::vec3 RayTracer::TraceRay(shared<Ray> _ray)
 		shared<RayDetails> tempDetails = IntersectingSphere(_ray, m_spheres.at(i));
 		if (tempDetails->GetIsIntersecting())
 		{
-			details->SetIsIntersecting(true);
-			if (tempDetails->GetIntersectDistance() < details->GetIntersectDistance())
+			if (details->GetIsIntersecting())
 			{
+				if (tempDetails->GetIntersectDistance() < details->GetIntersectDistance())
+				{
+					details->SetIntersectDistance(tempDetails->GetIntersectDistance());
+					details->SetColour(m_spheres.at(i)->GetColour());
+				}
+			}
+			else
+			{
+				details->SetIsIntersecting(true);
 				details->SetIntersectDistance(tempDetails->GetIntersectDistance());
+				details->SetColour(m_spheres.at(i)->GetColour());
 			}
 		}
 	}
@@ -35,12 +37,20 @@ glm::vec3 RayTracer::TraceRay(shared<Ray> _ray)
 		// Call objects shading method?? 
 		// Probably wrong
 		//details->GetColour();
-		return glm::vec3(255.0f, 0.0f, 0.0f);
+		return details->GetColour();
 	}
 	else
 	{
-		return glm::vec3(0.0f, 0.0f, 0.0f); // ToDo: Change this to actual background colour
+		return glm::vec3(0.0f, 50.0f, 50.0f); // ToDo: Change this to actual background colour
 	}
+	
+	// Old Botch
+	/*
+	if (IntersectingSphere(_ray, m_spheres.at(0))->GetIsIntersecting())
+	{
+		return glm::vec3(255.0f, 0.0f, 0.0f);
+	}
+	return glm::vec3(0.0f, 50.0f, 50.0f);
 	*/
 }
 
@@ -118,7 +128,7 @@ shared<RayDetails> RayTracer::IntersectingSphere(shared<Ray> _ray, shared<Sphere
 	}
 }
 
-glm::vec3 RayTracer::GetSphereNormal(glm::vec3 _centrePoint, glm::vec3 _samplePoint)
+glm::vec3 RayTracer::GetSphereNormal(shared<Sphere> _sphere, glm::vec3 _samplePoint)
 {
 	return glm::vec3();
 }

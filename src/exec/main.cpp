@@ -36,9 +36,20 @@ int main()
 	Camera camera(windowSize);
 	RayTracer tracer;
 	shared<Sphere> sphere = makesh<Sphere>();
-	sphere->SetPosition(glm::vec3(0.0f, 0.0f, 6.0f));
-	sphere->SetRadius(1.0f);
+	sphere->SetPosition(glm::vec3(1.0f, 0.0f, 7.0f));
+	sphere->SetRadius(1.5f);
+	sphere->SetColour(glm::vec3(255.0f, 0.0f, 0.0f));
 	tracer.AddSphere(sphere);
+	shared<Sphere> sphere2 = makesh<Sphere>();
+	sphere2->SetPosition(glm::vec3(0.0f, 0.0f, 6.0f));
+	sphere2->SetRadius(1.0f);
+	sphere2->SetColour(glm::vec3(0.0f, 255.0f, 0.0f));
+	tracer.AddSphere(sphere2);
+	shared<Sphere> sphere3 = makesh<Sphere>();
+	sphere3->SetPosition(glm::vec3(0.0f, 1.0f, 6.5f));
+	sphere3->SetRadius(1.5f);
+	sphere3->SetColour(glm::vec3(0.0f, 0.0f, 255.0f));
+	tracer.AddSphere(sphere3);
 	// Pray?
 	for (int i = 0; i < windowSize.x; i++)
 	{
