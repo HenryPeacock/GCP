@@ -23,6 +23,6 @@ glm::vec4 Light::GetLighting(shared<Sphere> _sphere, shared<Ray> _ray, shared<Ra
 	float DOT = glm::abs(glm::dot(_details->GetNormal(), _ray->GetDirection()));
 	float DOT2 = glm::abs(glm::dot(_details->GetNormal(), lightVector));
 
-	float result = ((_sphere->GetAmbient()) + (1.0f*(DOT2)) + (1.0f*glm::pow(DOT2, 2.0f)));
+	float result = ((0.01f*_sphere->GetAmbient()) + (0.01f*(DOT2)) + (0.01f*glm::pow(DOT2, 2.0f)));
 	return (_sphere->GetColour() * result);
 }

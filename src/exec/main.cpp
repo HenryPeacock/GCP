@@ -30,8 +30,6 @@ int main()
 	// Draw the single pixel
 	MCG::DrawPixel(pixelPosition, pixelColour);
 
-	// Trying to draw a sphere :O
-
 	// Make the variables
 	Camera camera(windowSize);
 	RayTracer tracer;
@@ -39,17 +37,17 @@ int main()
 	shared<Sphere> sphere = makesh<Sphere>();
 	sphere->SetPosition(glm::vec3(1.0f, 0.0f, 7.0f));
 	sphere->SetRadius(1.5f);
-	sphere->SetColour(glm::vec4(1.0f, 0.0f, 0.0f, 0.0f));
+	sphere->SetColour(glm::vec4(255.0f, 0.0f, 0.0f, 255.0f));
 	sphere->SetAmbient(0.01f);
 	shared<Sphere> sphere2 = makesh<Sphere>();
 	sphere2->SetPosition(glm::vec3(0.0f, 0.0f, 6.0f));
 	sphere2->SetRadius(1.0f);
-	sphere2->SetColour(glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));
+	sphere2->SetColour(glm::vec4(0.0f, 255.0f, 0.0f, 255.0f));
 	sphere2->SetAmbient(0.01f);
 	shared<Sphere> sphere3 = makesh<Sphere>();
 	sphere3->SetPosition(glm::vec3(0.0f, 1.0f, 6.5f));
 	sphere3->SetRadius(1.5f);
-	sphere3->SetColour(glm::vec4(0.0f, 0.0f, 1.0f, 0.0f));
+	sphere3->SetColour(glm::vec4(0.0f, 0.0f, 255.0f, 255.0f));
 	sphere3->SetAmbient(0.01f);
 	// Add Spheres
 	tracer.AddSphere(sphere);
@@ -57,7 +55,7 @@ int main()
 	tracer.AddSphere(sphere3);
 	// Make Light
 	shared<Light> light = makesh<Light>(
-		glm::vec3(1.0f, 1.0f, -2.0f),
+		glm::vec3(1.0f, 1.0f, 1.0f),
 		glm::vec3(0.0f, 0.0f, 0.0f),
 		glm::vec4(255.0f, 255.0f, 255.0f, 255.0f));
 	// Add Light
