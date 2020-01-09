@@ -8,5 +8,6 @@
 #include "Object.h"
 #include "RayTracer.h"
 #include "Sphere.h"
+#include "Light.h"
 
 #endif

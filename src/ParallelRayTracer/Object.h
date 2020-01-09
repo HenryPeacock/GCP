@@ -15,8 +15,16 @@ public:
 	//
 	glm::vec3 GetScale() { return m_scale; };
 	void SetScale(glm::vec3 _scale) { m_scale = _scale; };
+	//
+	glm::vec4 GetColour() { return m_colour; };
+	void SetColour(glm::vec4 _colour) { m_colour = _colour; };
+	//
+	float GetAmbient() { return m_ambient; };
+	void SetAmbient(float _ambient) { m_ambient = _ambient; };
 protected:
 	glm::vec3 m_position, m_rotation, m_scale;
+	glm::vec4 m_colour;
+	float m_ambient;
 };
 
 #endif

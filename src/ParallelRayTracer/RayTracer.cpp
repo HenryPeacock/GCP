@@ -1,6 +1,6 @@
 #include "RayTracer.h"
 
-glm::vec3 RayTracer::TraceRay(shared<Ray> _ray)
+glm::vec4 RayTracer::TraceRay(shared<Ray> _ray)
 {
 	// Find first object hit by ray
 	//	- Check all objects in the scene
@@ -20,14 +20,16 @@ glm::vec3 RayTracer::TraceRay(shared<Ray> _ray)
 				if (tempDetails->GetIntersectDistance() < details->GetIntersectDistance())
 				{
 					details->SetIntersectDistance(tempDetails->GetIntersectDistance());
-					details->SetColour(m_spheres.at(i)->GetColour());
+					details->SetColour(m_lights.at(0)->GetLighting(m_spheres.at(i), _ray, tempDetails));
+					//details->SetColour(m_spheres.at(i)->GetColour());
 				}
 			}
 			else
 			{
 				details->SetIsIntersecting(true);
 				details->SetIntersectDistance(tempDetails->GetIntersectDistance());
-				details->SetColour(m_spheres.at(i)->GetColour());
+				details->SetColour(m_lights.at(0)->GetLighting(m_spheres.at(i), _ray, tempDetails));
+				//details->SetColour(m_spheres.at(i)->GetColour());
 			}
 		}
 	}
@@ -36,22 +38,12 @@ glm::vec3 RayTracer::TraceRay(shared<Ray> _ray)
 		// ToDo
 		// Call objects shading method?? 
 		// Probably wrong
-		//details->GetColour();
 		return details->GetColour();
 	}
 	else
 	{
-		return glm::vec3(0.0f, 50.0f, 50.0f); // ToDo: Change this to actual background colour
+		return glm::vec4(20.0f, 20.0f, 20.0f, 0.0f); // ToDo: Change this to actual background colour
 	}
-	
-	// Old Botch
-	/*
-	if (IntersectingSphere(_ray, m_spheres.at(0))->GetIsIntersecting())
-	{
-		return glm::vec3(255.0f, 0.0f, 0.0f);
-	}
-	return glm::vec3(0.0f, 50.0f, 50.0f);
-	*/
 }
 
 glm::vec3 RayTracer::ClosestPoint(shared<Ray> _ray, glm::vec3 _queryPoint)
