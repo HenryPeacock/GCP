@@ -19,10 +19,12 @@ glm::vec4 Light::GetLighting(shared<Sphere> _sphere, shared<Ray> _ray, shared<Ra
 {
 	// http://www.robots.ox.ac.uk/~att/index.html
 	glm::vec3 lightVector = (_sphere->GetPosition() - m_position);
+	glm::vec3 normalLV = glm::normalize(lightVector);
 
-	float DOT = glm::abs(glm::dot(_details->GetNormal(), _ray->GetDirection()));
-	float DOT2 = glm::abs(glm::dot(_details->GetNormal(), lightVector));
+	float DOT = glm::abs(glm::dot(_details->GetNormal(), normalLV));
 
-	float result = ((0.01f*_sphere->GetAmbient()) + (0.01f*(DOT2)) + (0.01f*glm::pow(DOT2, 2.0f)));
+	float result = ((0.8f*_sphere->GetAmbient()) + (0.9f*(DOT)) + (0.4f*glm::pow(DOT, 100.0f)));
+	result *= (3.0f/ glm::length(lightVector));
+
 	return (_sphere->GetColour() * result);
 }
